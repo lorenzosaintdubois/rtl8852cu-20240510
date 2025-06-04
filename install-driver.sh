@@ -41,6 +41,16 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
+function uname_m()
+{
+  echo "aarch64"
+}
+
+function uname_r()
+{
+  echo "6.6.74-current-bcm2711"
+}
+
 SCRIPT_NAME="install-driver.sh"
 SCRIPT_VERSION="20241208"
 
@@ -52,19 +62,19 @@ DRV_DIR="$(pwd)"
 
 OPTIONS_FILE="${MODULE_NAME}.conf"
 
-KARCH="$(uname -m)"
+KARCH="$(uname_m)"
 #if [ -z "${KARCH+1}" ]; then
 #	KARCH="$(uname -m)"
 #fi
 
-KVER="$(uname -r)"
+KVER="$(uname_r)"
 #if [ -z "${KVER+1}" ]; then
 #	KVER="$(uname -r)"
 #fi
 
 MODDESTDIR="/lib/modules/${KVER}/kernel/drivers/net/wireless/"
 
-GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
+GARCH="$(uname_m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
 #if [ -z "${GARCH+1}" ]; then
 #	GARCH="$(uname -m | sed -e "s/i.86/i386/; s/ppc/powerpc/; s/armv.l/arm/; s/aarch64/arm64/; s/riscv.*/riscv/;")"
 #fi
@@ -232,7 +242,7 @@ fi
 
 # check to see if the correct header files are installed
 # - problem with fedora 40 reported
-if [ ! -d "/lib/modules/$(uname -r)/build" ]; then
+if [ ! -d "/lib/modules/$(uname_r)/build" ]; then
 	echo "Your kernel header files aren't properly installed."
 	echo "Please consult your distro documentation or user support forums."
 	echo "Once the header files are properly installed, please run \"sudo ./${SCRIPT_NAME}\""
